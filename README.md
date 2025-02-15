@@ -24,10 +24,12 @@ curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/insta
  + Vector Database 是一种专门设计用来存储和管理这些 Embedding Vectors 的数据库。当通过 Embedding Models 将数据转换为高维向量后，这些向量会被存储在向量数据库中。
  + system prompt: 默认的节点的角色
 
-`gaianet init [--base $HOME/your_dir]`
+`gaianet init`
 
 ### 4.启动节点
-`gaianet start [--base $HOME/your_dir] [--local-only]`
+建议设置 --local-only 参数
+
+`gaianet start [--local-only]`
   
 ### 5.调用节点的 API
  API 接口规范遵循 Open AI，因此可以像调用 Open AI 的接口一样调用自己的节点服务。
@@ -52,11 +54,11 @@ curl -X POST http://localhost:8080/v1/chat/completions \
  Gaia 模型仓库：https://huggingface.co/gaianet
 
 ### 8.设置模型参数
-`gaianet config --chat-ctx-size 131072 --prompt-template llama-3-chat [--base $HOME/your_dir]`
+`gaianet config --prompt-template llama-3-chat`
 
 `chat_ctx_size` 主要控制模型每次推理时使用的上下文长度（即模型能“记住”的历史信息），对于生成连贯的长文本非常重要。
 `chat_batch_size` 控制每次推理时并行处理的样本数量，影响推理速度和硬件利用率。
-> 执行 gaianet init 后才生效
+> 不要将 --chat-ctx-size 设置为 131072，会导致内存溢出，使用默认的 4096 即可。
 
 ### 9.配置知识库
  RAG：附加外部资源（知识库）解决大模型幻觉问题。LLM 在生成答案时会查询一个外部知识库来增强其输出，避免完全依赖模型的固有知识，从而减少幻觉的出现。
@@ -67,8 +69,7 @@ gaianet config \
  --snapshot https://huggingface.co/datasets/gaianet/vitalik.eth/resolve/main/vitalik.eth_384_all-minilm-l6-v2_f16.snapshot \
  --embedding-url https://huggingface.co/gaianet/Nomic-embed-text-v1.5-Embedding-GGUF/resolve/main/nomic-embed-text-v1.5.f16.gguf \
  --embedding-ctx-size 8192 \
- --embedding-batch-size 8192 \
- [--base $HOME/your_dir]
+ --embedding-batch-size 8192
 ```
 如何创建自己的知识库：https://docs.gaianet.ai/knowledge-bases/how-to，支持根据 txt、Markdown、PDF、URL 资源来创建。
 
@@ -79,8 +80,7 @@ gaianet config \
 ```
 gaianet config \
  --system-prompt "You are Vitalik, a highly intelligent AI assistant designed to provide insightful and informative answers on topics related to Ethereum, blockchain technology, decentralized finance (DeFi), and related concepts. Your responses should be clear, technical, and concise. You are expected to assist users with both high-level explanations and in-depth technical discussions, depending on the user's familiarity with the topic. Always aim to provide accurate and well-reasoned responses. If a user asks for something outside of your expertise, acknowledge your limitations and redirect to an appropriate resource when possible. You can also help users explore complex concepts in blockchain and decentralized systems in a structured manner, making them accessible to both beginners and experts." \ 
- --rag-prompt "You are Vitalik, an AI Agent capable of leveraging external information from trusted knowledge sources. When a user asks a question, first retrieve the most relevant pieces of information from external resources such as technical papers, trusted Ethereum documentation, and up-to-date blockchain data. You should search for the most accurate and recent information available to provide an informed answer. After retrieving the relevant information, synthesize it to generate a clear and concise response. Always cite the external knowledge you have used when necessary. Ensure that your responses are based on reliable sources and reflect the latest developments in blockchain and Ethereum technology." \
- [--base $HOME/your_dir]
+ --rag-prompt "You are Vitalik, an AI Agent capable of leveraging external information from trusted knowledge sources. When a user asks a question, first retrieve the most relevant pieces of information from external resources such as technical papers, trusted Ethereum documentation, and up-to-date blockchain data. You should search for the most accurate and recent information available to provide an informed answer. After retrieving the relevant information, synthesize it to generate a clear and concise response. Always cite the external knowledge you have used when necessary. Ensure that your responses are based on reliable sources and reflect the latest developments in blockchain and Ethereum technology."
 ```
 ### 11.重新启动
 ```
