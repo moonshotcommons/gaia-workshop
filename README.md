@@ -25,8 +25,17 @@ curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/insta
 `gaianet start [--base $HOME/your_dir] [--local-only]`
   
 ### 5.调用节点的 API
+ API 接口规范遵循 Open AI，因此可以像调用 Open AI 的接口一样调用自己的节点服务。
+```
+curl -X POST http://localhost:8080/v1/chat/completions \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"messages":[{"role":"system", "content": "You are a helpful assistant."}, {"role":"user", "content": "Where is Paris?"}]}'
+```
 
 ### 6.使用 UI 界面进行对话
+ ![RAG Workflow](2.png)
+
  where is the eiffel tower?
 
  do i need a ticket?
@@ -70,9 +79,9 @@ gaianet config \
 ```
 ### 11.重新启动
 ```
-	gaianet stop
-	gaianet init
-	gaianet start
+ gaianet stop
+ gaianet init
+ gaianet start
 ```
 
 
