@@ -1,4 +1,4 @@
-# Gaia-workshop：运行自己的 Gaia 节点
+# Gaia-workshop：运行自己的 Gaia 节点 - Vitalik AI Agent
 
 ## 操作步骤
 
@@ -32,6 +32,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
   -H 'Content-Type: application/json' \
   -d '{"messages":[{"role":"system", "content": "You are a helpful assistant."}, {"role":"user", "content": "Where is Paris?"}]}'
 ```
+更多 Gaia API 集成 Agent 的例子： https://docs.gaianet.ai/agent-integrations
 
 ### 6.使用 UI 界面进行对话
  ![RAG Workflow](2.png)
@@ -40,7 +41,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
  do i need a ticket?
 
-### 7.更换模型
+### 7.更换为 DeepSeek 模型
 切换不同的模型：https://github.com/GaiaNet-AI/node-configs/tree/main
 
  Gaia 模型仓库：https://huggingface.co/gaianet
@@ -67,6 +68,8 @@ gaianet config \
  --embedding_batch_size 8192 \
  [--base $HOME/your_dir]
 ```
+如何创建自己的知识库：https://docs.gaianet.ai/knowledge-bases/how-to，支持根据 txt、Markdown、PDF、URL 资源来创建。
+
 
 ### 10.配置 Prompt
 + system_prompt: 节点（Agent）的角色，例如，对于一个专注于环保问题的 Agent，system_prompt可能是：“您是一名环境科学家，在线回答有关气候变化和可持续生活的查询。请提供科学准确且实用的建议。”
