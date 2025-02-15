@@ -14,7 +14,9 @@ curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/insta
 ```
 
 ### 2.设置环境变量
-`source ~/.zshrc or source ~/.bash_profile`  
+```
+source ~/.zshrc or source ~/.bash_profile
+```  
 
 ### 3.初始化节点
 下载节点所需的 LLM 及知识库等内容，相关配置在 `config.json` 文件中：
@@ -23,13 +25,16 @@ curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/insta
  + Snapshot：本地知识库，解决 LLM 幻觉问题
  + Vector Database 是一种专门设计用来存储和管理这些 Embedding Vectors 的数据库。当通过 Embedding Models 将数据转换为高维向量后，这些向量会被存储在向量数据库中。
  + system prompt: 默认的节点的角色
-
-`gaianet init`
+```
+gaianet init
+```
 
 ### 4.启动节点
 建议设置 --local-only 参数
 
-`gaianet start [--local-only]`
+```
+gaianet start [--local-only]
+```
   
 ### 5.调用节点的 API
  API 接口规范遵循 Open AI，因此可以像调用 Open AI 的接口一样调用自己的节点服务。
@@ -54,7 +59,9 @@ curl -X POST http://localhost:8080/v1/chat/completions \
  Gaia 模型仓库：https://huggingface.co/gaianet
 
 ### 8.设置模型参数
-`gaianet config --prompt-template llama-3-chat`
+```
+gaianet config --prompt-template llama-3-chat
+```
 
 `chat_ctx_size` 主要控制模型每次推理时使用的上下文长度（即模型能“记住”的历史信息），对于生成连贯的长文本非常重要。
 `chat_batch_size` 控制每次推理时并行处理的样本数量，影响推理速度和硬件利用率。
