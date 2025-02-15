@@ -18,6 +18,11 @@ curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/insta
 
 ### 3.初始化节点
 下载节点所需的 LLM 及知识库等内容，相关配置在 `config.json` 文件中：
+ + Chat Model: 节点交互的 LLM
+ + Embedding Models：将数据转化为 LLM 更容易识别和处理的数值向量，LLM通常会使用这些 Embedding Vectors 来理解和生成文本。
+ + Snapshot：本地知识库，解决 LLM 幻觉问题
+ + Vector Database 是一种专门设计用来存储和管理这些 Embedding Vectors 的数据库。当通过 Embedding Models 将数据转换为高维向量后，这些向量会被存储在向量数据库中。
+ + system prompt: 默认的节点的角色
 
 `gaianet init [--base $HOME/your_dir]`
 
@@ -56,16 +61,13 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 ### 9.配置知识库
  RAG：附加外部资源（知识库）解决大模型幻觉问题。LLM 在生成答案时会查询一个外部知识库来增强其输出，避免完全依赖模型的固有知识，从而减少幻觉的出现。
  ![RAG Workflow](image-1.png)
- + Embedding Models：将数据转化为 LLM 更容易识别和处理的数值向量，LLM通常会使用这些 Embedding Vectors 来理解和生成文本。
-
- + Vector Database 是一种专门设计用来存储和管理这些 Embedding Vectors 的数据库。当通过 Embedding Models 将数据转换为高维向量后，这些向量会被存储在向量数据库中。
 
 ```
 gaianet config \
  --snapshot https://huggingface.co/datasets/gaianet/vitalik.eth/resolve/main/vitalik.eth_384_all-minilm-l6-v2_f16.snapshot \
  --embedding-url https://huggingface.co/gaianet/Nomic-embed-text-v1.5-Embedding-GGUF/resolve/main/nomic-embed-text-v1.5.f16.gguf \
  --embedding-ctx-size 8192 \
- --embedding_batch_size 8192 \
+ --embedding-batch-size 8192 \
  [--base $HOME/your_dir]
 ```
 如何创建自己的知识库：https://docs.gaianet.ai/knowledge-bases/how-to，支持根据 txt、Markdown、PDF、URL 资源来创建。
